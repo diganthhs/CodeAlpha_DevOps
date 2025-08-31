@@ -30,5 +30,3 @@ jobs:
       - name: Package JAR
         run: ./gradlew jar
 
-      - name: List built JAR
-        run: ls -l build/libs/
