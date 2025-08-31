@@ -1,31 +1,42 @@
-name: Java CI with Gradle
+name: Java CI/CD with Gradle
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2. Setup Java 22
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: '22'
           distribution: 'temurin'
 
+      # 3. Make Gradle Wrapper executable
       - name: Make Gradle Wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build with Gradle
+      # 4. Build, test, and package
+      - name: Build and test
         run: ./gradlew clean build
 
-      - name: Run tests
-        run: ./gradlew test
+      # 5. Upload JAR artifact
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-app-jar
+          path: build/libs/*.jar
 
-      - name: Package JAR
-        run: ./gradlew jar
+      # 6. Simulate deployment by running the JAR
+      - name: Simulate deployment
+        run: |
+          echo "Running the built application..."
+          java -jar build/libs/*.jar
