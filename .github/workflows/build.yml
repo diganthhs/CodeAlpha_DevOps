@@ -1,6 +1,5 @@
 name: Java CI with Gradle
 
-# Trigger workflow on push or pull request to main
 on:
   push:
     branches: [ main ]
@@ -10,36 +9,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Set up JDK 22
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
           java-version: '22'
           distribution: 'temurin'
 
-      # 3. Grant execution permission for gradlew
       - name: Make Gradle Wrapper executable
         run: chmod +x ./gradlew
 
-      # 4. Build project with Gradle
       - name: Build with Gradle
         run: ./gradlew clean build
 
-      # 5. Run tests
       - name: Run tests
         run: ./gradlew test
 
-      # 6. Package JAR
       - name: Package JAR
         run: ./gradlew jar
 
-      # 7. Upload JAR as artifact
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: my-app-jar
           path: build/libs/*.jar
