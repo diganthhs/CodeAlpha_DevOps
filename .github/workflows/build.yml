@@ -29,9 +29,3 @@ jobs:
 
       - name: Package JAR
         run: ./gradlew jar
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: my-app-jar
-          path: build/libs/*.jar
