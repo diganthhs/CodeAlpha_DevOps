@@ -47,6 +47,8 @@ application {
 }
 
 jar {
+    archiveBaseName.set("app")  // Name the JAR
+    archiveVersion.set("")      // Remove version from filename
     manifest {
         attributes 'Main-Class': 'org.example.App'
     }
